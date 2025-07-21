@@ -1,52 +1,54 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../components/contexts/AuthContext";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
+"use client"
+
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../components/contexts/AuthContext"
+import { Button } from "../components/ui/button"
+import { Input } from "../components/ui/input"
+import { Label } from "../components/ui/label"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../components/ui/card";
-import { Separator } from "../components/ui/separator";
-import { Mail, Lock, Chrome, Github } from "lucide-react";
+} from "../components/ui/card"
+import { Separator } from "../components/ui/separator"
+import { Mail, Lock, Chrome, Github } from "lucide-react"
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const { login } = useAuth();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+    e.preventDefault()
+    setError("")
 
     if (!email || !password) {
-      setError("Please enter both email and password.");
-      return;
+      setError("Please enter both email and password.")
+      return
     }
 
-    setLoading(true);
+    setLoading(true)
 
     try {
-      await login(email, password);
-      navigate("/index");
+      await login(email, password)
+      navigate("/index")
     } catch (err) {
-      console.error("Login error:", err);
+      console.error("Login error:", err)
       setError(
         err?.response?.data?.message ||
         err?.message ||
         "Login failed. Please try again."
-      );
+      )
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-100 to-gray-200 px-4">
@@ -109,9 +111,7 @@ export default function Login() {
             <Button
               variant="outline"
               className="w-full bg-white border-gray-300 hover:bg-gray-100"
-              onClick={() => {
-                window.location.href = "http://localhost:5000/users/auth/google";
-              }}
+              onClick={() => alert("Google login not yet implemented.")}
             >
               <Chrome className="mr-2 h-4 w-4" />
               Continue with Google
@@ -120,9 +120,7 @@ export default function Login() {
             <Button
               variant="outline"
               className="w-full bg-white border-gray-300 hover:bg-gray-100"
-              onClick={() => {
-                window.location.href = "http://localhost:5000/users/auth/github";
-              }}
+              onClick={() => alert("GitHub login not yet implemented.")}
             >
               <Github className="mr-2 h-4 w-4" />
               Continue with GitHub
@@ -141,5 +139,5 @@ export default function Login() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }
